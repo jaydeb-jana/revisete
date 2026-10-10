@@ -8,6 +8,7 @@ interface AuthContextType {
   businesses: Business[];
   activeBusiness: Business | null;
   setActiveBusiness: (business: Business) => void;
+  updateActiveBusiness: (updates: Partial<Business>) => void;
   userRole: UserRole;
   isLoading: boolean;
   isOnboardingCompleted: boolean;
@@ -70,6 +71,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const setActiveBusiness = (biz: Business) => {
     setActiveBusinessState(biz);
+  };
+
+  const updateActiveBusiness = (updates: Partial<Business>) => {
+    setActiveBusinessState(prev => {
+      if (!prev) return null;
+      const updated = { ...prev, ...updates };
+      setBusinesses(bList => bList.map(b => b.id === updated.id ? updated : b));
+      return updated;
+    });
   };
 
   const login = async (email: string, pass: string): Promise<boolean> => {
@@ -179,6 +189,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       businesses,
       activeBusiness,
       setActiveBusiness,
+      updateActiveBusiness,
       userRole: 'owner',
       isLoading,
       isOnboardingCompleted,

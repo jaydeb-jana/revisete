@@ -52,23 +52,23 @@ export const RewardsPage: React.FC = () => {
   return (
     <div className="space-y-6 font-sans">
       {/* PAGE HEADER */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200 pb-5">
         <div>
-          <h1 className="text-2xl font-extrabold text-slate-100 flex items-center gap-2">
+          <h1 className="text-2xl font-extrabold font-serif text-slate-900 flex items-center gap-2">
             Reward Entitlements & Redemption
-            <Badge variant="teal">{rewards.length} Issued Vouchers</Badge>
+            <Badge variant="druto">{rewards.length} Issued Vouchers</Badge>
           </h1>
-          <p className="text-xs text-slate-400 mt-1">Validate single-use redemption codes with real-time audit logs</p>
+          <p className="text-xs text-slate-500 mt-1">Validate single-use redemption codes with real-time audit logs</p>
         </div>
-        <Button variant="teal" size="sm" onClick={() => setIsRedeemModalOpen(true)} leftIcon={<Gift className="w-4 h-4" />}>
+        <Button variant="druto" size="sm" onClick={() => setIsRedeemModalOpen(true)} leftIcon={<Gift className="w-4 h-4" />}>
           Redeem Customer Voucher Code
         </Button>
       </div>
 
       {/* RESULT TOAST ALERT */}
       {toastResult && (
-        <div className={`p-4 rounded-xl border flex items-center justify-between text-xs font-semibold ${
-          toastResult.success ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-300' : 'bg-rose-500/15 border-rose-500/30 text-rose-300'
+        <div className={`p-4 rounded-2xl border flex items-center justify-between text-xs font-semibold ${
+          toastResult.success ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-rose-50 border-rose-200 text-[#800A12]'
         }`}>
           <div className="flex items-center gap-2">
             {toastResult.success ? <CheckCircle2 className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
@@ -82,19 +82,25 @@ export const RewardsPage: React.FC = () => {
       <div className="flex items-center gap-2">
         <button
           onClick={() => setFilterStatus('all')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold ${filterStatus === 'all' ? 'bg-teal-500 text-slate-950' : 'bg-slate-800 text-slate-300'}`}
+          className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
+            filterStatus === 'all' ? 'bg-[#800A12] text-white shadow-md' : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
+          }`}
         >
           All Rewards ({rewards.length})
         </button>
         <button
           onClick={() => setFilterStatus('available')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold ${filterStatus === 'available' ? 'bg-teal-500 text-slate-950' : 'bg-slate-800 text-slate-300'}`}
+          className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
+            filterStatus === 'available' ? 'bg-[#800A12] text-white shadow-md' : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
+          }`}
         >
           Available ({rewards.filter(r => r.status === 'available').length})
         </button>
         <button
           onClick={() => setFilterStatus('redeemed')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold ${filterStatus === 'redeemed' ? 'bg-teal-500 text-slate-950' : 'bg-slate-800 text-slate-300'}`}
+          className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
+            filterStatus === 'redeemed' ? 'bg-slate-800 text-white shadow-md' : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
+          }`}
         >
           Redeemed ({rewards.filter(r => r.status === 'redeemed').length})
         </button>
@@ -103,26 +109,26 @@ export const RewardsPage: React.FC = () => {
       {/* REWARDS GRID */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredRewards.map(r => (
-          <Card key={r.id} className="p-5 bg-slate-900 border-slate-800 flex flex-col justify-between space-y-4">
+          <Card key={r.id} className="p-5 bg-white border-slate-200/80 flex flex-col justify-between space-y-4 shadow-sm hover:border-slate-300 transition-all">
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Badge variant={r.status === 'available' ? 'teal' : 'neutral'} size="sm">
+                <Badge variant={r.status === 'available' ? 'druto' : 'neutral'} size="sm">
                   {r.status.toUpperCase()}
                 </Badge>
-                <span className="text-xs font-mono font-bold text-teal-400">{r.redemption_code}</span>
+                <span className="text-xs font-mono font-bold text-[#800A12]">{r.redemption_code}</span>
               </div>
-              <h3 className="font-bold text-slate-100 text-base">{r.title}</h3>
-              <p className="text-xs text-slate-400">{r.description}</p>
+              <h3 className="font-bold text-slate-900 text-base">{r.title}</h3>
+              <p className="text-xs text-slate-600">{r.description}</p>
             </div>
 
-            <div className="pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-500">
+            <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
               <span>Unlocked: {new Date(r.unlocked_at).toLocaleDateString()}</span>
               {r.status === 'available' ? (
                 <Button variant="outline" size="sm" onClick={() => { setInputCode(r.redemption_code); setIsRedeemModalOpen(true); }}>
                   Redeem
                 </Button>
               ) : (
-                <span className="text-emerald-400 font-semibold">Redeemed</span>
+                <span className="text-emerald-700 font-semibold">Redeemed</span>
               )}
             </div>
           </Card>
@@ -147,15 +153,15 @@ export const RewardsPage: React.FC = () => {
             onChange={e => setRedemptionNotes(e.target.value)}
           />
 
-          <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 text-xs text-slate-400 space-y-1">
-            <p className="font-bold text-slate-300 flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-teal-400" /> Single-Use Validation Safeguard</p>
+          <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 space-y-1">
+            <p className="font-bold text-slate-800 flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-[#800A12]" /> Single-Use Validation Safeguard</p>
             <p>1. Validates code existence and expiration date in real-time.</p>
             <p>2. Marks status as REDEEMED instantly to prevent reuse.</p>
           </div>
 
-          <div className="pt-4 flex justify-end gap-3 border-t border-slate-800">
+          <div className="pt-4 flex justify-end gap-3 border-t border-slate-200">
             <Button variant="outline" size="sm" type="button" onClick={() => setIsRedeemModalOpen(false)}>Cancel</Button>
-            <Button variant="teal" size="sm" type="submit">Verify & Redeem</Button>
+            <Button variant="druto" size="sm" type="submit">Verify & Redeem</Button>
           </div>
         </form>
       </Modal>

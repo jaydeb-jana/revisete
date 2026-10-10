@@ -21,16 +21,16 @@ export const Button: React.FC<ButtonProps> = ({
   disabled,
   ...props
 }) => {
-  const baseStyles = 'inline-flex items-center justify-center font-semibold rounded-xl transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-950 disabled:opacity-50 disabled:cursor-not-allowed';
+  const baseStyles = 'inline-flex items-center justify-center font-bold rounded-xl transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-300 disabled:opacity-50 disabled:cursor-not-allowed';
 
   const variants = {
-    primary: 'bg-[#900A12] hover:bg-[#7A080F] text-white focus:ring-[#900A12] shadow-lg shadow-rose-950/40',
-    druto: 'bg-[#900A12] hover:bg-[#7A080F] text-white focus:ring-[#900A12] shadow-lg shadow-rose-950/40',
-    teal: 'bg-teal-600 hover:bg-teal-500 text-white focus:ring-teal-400 shadow-sm',
-    secondary: 'bg-slate-800 hover:bg-slate-700 text-slate-200 focus:ring-slate-600 border border-slate-700',
-    outline: 'bg-transparent hover:bg-slate-800 text-slate-200 border border-slate-700 focus:ring-slate-600',
-    danger: 'bg-rose-600 hover:bg-rose-500 text-white focus:ring-rose-500 shadow-sm',
-    ghost: 'bg-transparent hover:bg-slate-800/60 text-slate-400 hover:text-slate-200 focus:ring-slate-600',
+    primary: 'bg-[#800A12] hover:bg-[#68070E] text-white focus:ring-[#800A12] shadow-sm',
+    druto: 'bg-[#800A12] hover:bg-[#68070E] text-white focus:ring-[#800A12] shadow-sm',
+    teal: 'bg-[#800A12] hover:bg-[#68070E] text-white focus:ring-[#800A12] shadow-sm',
+    secondary: 'bg-slate-100 hover:bg-slate-200 text-slate-800 focus:ring-slate-300 border border-slate-200',
+    outline: 'bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 focus:ring-slate-300 shadow-sm',
+    danger: 'bg-rose-600 hover:bg-rose-700 text-white focus:ring-rose-500 shadow-sm',
+    ghost: 'bg-transparent hover:bg-slate-100 text-slate-600 hover:text-slate-900 focus:ring-slate-300',
   };
 
   const sizes = {

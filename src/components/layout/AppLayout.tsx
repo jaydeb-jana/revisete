@@ -33,9 +33,7 @@ export const AppLayout: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [isBizMenuOpen, setIsBizMenuOpen] = useState(false);
-
-  // Metrics for Druto Header Strip
+  // Metric calculation for Druto Header Strip
   const scansCount = visits.length;
   const usersCount = customers.length;
   const rewardsCount = rewards.filter(r => r.status === 'redeemed').length;
@@ -51,8 +49,8 @@ export const AppLayout: React.FC = () => {
 
   const desktopNavItems = [
     { to: '/app/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { to: '/app/catalog', label: 'Products & Menu', icon: Utensils },
-    { to: '/app/customers', label: 'Customer CRM', icon: Users },
+    { to: '/app/catalog', label: 'Catalog', icon: Utensils },
+    { to: '/app/customers', label: 'Customers', icon: Users },
     { to: '/app/visits', label: 'Visits & Stamp Engine', icon: QrCode },
     { to: '/app/branches', label: 'Multi-Branch GPS', icon: MapPin },
     { to: '/app/loyalty', label: 'Loyalty Milestones', icon: Award },
@@ -79,51 +77,27 @@ export const AppLayout: React.FC = () => {
               </div>
               <span className="text-[#900A12]">Druto</span>
             </Link>
-            <Badge variant="druto" size="sm">
-              Merchant Console
-            </Badge>
           </div>
 
-          <button
-            onClick={() => setIsBizMenuOpen(!isBizMenuOpen)}
-            className="w-full bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl p-2.5 flex items-center justify-between transition-colors text-left"
-          >
-            <div className="flex items-center gap-2.5 overflow-hidden">
-              <div className="w-8 h-8 rounded-full bg-[#900A12] text-white flex items-center justify-center font-bold text-xs">
+          <div className="w-full bg-slate-50 border border-slate-200/80 rounded-xl p-2.5 flex items-center gap-2.5 text-left">
+            {activeBusiness?.logo_url ? (
+              <img
+                src={activeBusiness.logo_url}
+                alt={activeBusiness.name}
+                className="w-8 h-8 rounded-full object-cover shrink-0 border border-slate-200"
+              />
+            ) : (
+              <div className="w-8 h-8 rounded-full bg-[#900A12] text-white flex items-center justify-center font-bold text-xs shrink-0">
                 {activeBusiness?.name.slice(0, 2).toUpperCase() || 'AR'}
               </div>
-              <div className="truncate">
-                <p className="text-xs font-bold text-slate-900 truncate">{activeBusiness?.name}</p>
-                <p className="text-[10px] text-slate-500 capitalize">{activeBusiness?.category}</p>
-              </div>
+            )}
+            <div className="truncate">
+              <p className="text-xs font-bold text-slate-900 truncate">{activeBusiness?.name}</p>
+              <p className="text-[10px] text-slate-500 font-medium capitalize">
+                {activeBusiness?.category?.replace('_', ' ') || 'Cafe'}
+              </p>
             </div>
-            <ChevronDown className="w-4 h-4 text-slate-400 shrink-0" />
-          </button>
-
-          {isBizMenuOpen && (
-            <div className="absolute top-full left-4 right-4 mt-1 bg-white border border-slate-200 rounded-xl shadow-2xl z-50 overflow-hidden py-1">
-              <div className="px-3 py-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                Select Workspace
-              </div>
-              {businesses.map(b => (
-                <button
-                  key={b.id}
-                  onClick={() => {
-                    setActiveBusiness(b);
-                    setIsBizMenuOpen(false);
-                  }}
-                  className={`w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-slate-50 transition-colors ${
-                    b.id === activeBusiness?.id ? 'text-[#900A12] font-bold bg-rose-50' : 'text-slate-700'
-                  }`}
-                >
-                  <span className="truncate">{b.name}</span>
-                  <Badge variant={b.id === activeBusiness?.id ? 'druto' : 'neutral'} size="sm">
-                    {b.category}
-                  </Badge>
-                </button>
-              ))}
-            </div>
-          )}
+          </div>
         </div>
 
         {/* NAVIGATION LINKS */}
@@ -174,63 +148,74 @@ export const AppLayout: React.FC = () => {
 
       {/* MAIN CONTAINER */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* DRUTO CRIMSON MAROON TOP HEADER (EXACT 1:1 MATCH WITH SCREENSHOT) */}
-        <header className="bg-[#800A12] text-white p-5 rounded-b-[2rem] shadow-lg space-y-4">
-          {/* HEADER TOP ROW */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-full bg-white border-2 border-white/40 flex items-center justify-center shrink-0 shadow-md">
-                <div className="w-full h-full rounded-full bg-[#800A12] flex items-center justify-center font-extrabold text-xs text-white">
-                  {activeBusiness?.name.slice(0, 2).toUpperCase() || 'AR'}
+        {/* DRUTO CRIMSON MAROON TOP HEADER (RENDERED ONLY ON DASHBOARD PAGE) */}
+        {location.pathname === '/app/dashboard' && (
+          <header className="bg-[#800A12] text-white p-5 rounded-b-[2rem] shadow-lg space-y-4">
+            {/* HEADER TOP ROW */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                {activeBusiness?.logo_url ? (
+                  <img
+                    src={activeBusiness.logo_url}
+                    alt={activeBusiness.name}
+                    className="w-11 h-11 rounded-full object-cover shrink-0 border-2 border-white/40 shadow-md"
+                  />
+                ) : (
+                  <div className="w-11 h-11 rounded-full bg-white border-2 border-white/40 flex items-center justify-center shrink-0 shadow-md">
+                    <div className="w-full h-full rounded-full bg-[#800A12] flex items-center justify-center font-extrabold text-xs text-white">
+                      {activeBusiness?.name.slice(0, 2).toUpperCase() || 'AR'}
+                    </div>
+                  </div>
+                )}
+
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h2 className="text-lg sm:text-xl font-extrabold tracking-tight text-white font-serif">{activeBusiness?.name}</h2>
+                    <span className="bg-[#4D0409]/80 text-amber-300 border border-amber-500/40 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">
+                      {activeBusiness?.status === 'trial' ? 'Trial' : activeBusiness?.status === 'active' ? 'Active' : 'Expired'}
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-rose-200 capitalize font-medium">{activeBusiness?.category} • Druto Partner</p>
                 </div>
               </div>
 
-              <div>
-                <div className="flex items-center gap-2">
-                  <h2 className="text-lg sm:text-xl font-extrabold tracking-tight text-white font-serif">{activeBusiness?.name}</h2>
-                  <span className="bg-[#4D0409]/80 text-amber-300 border border-amber-500/40 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">
-                    {activeBusiness?.status === 'trial' ? 'Trial' : activeBusiness?.status === 'active' ? 'Active' : 'Expired'}
-                  </span>
-                </div>
-                <p className="text-[11px] text-rose-200 capitalize font-medium">{activeBusiness?.category} • Druto Partner</p>
+              <button
+                onClick={() => navigate('/app/settings')}
+                className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white transition-colors"
+                title="Account Settings"
+              >
+                <User className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* TOP 4 METRICS STRIP (EXACT SCREENSHOT REPLICA) */}
+            <div className="grid grid-cols-4 gap-2 sm:gap-4">
+              <div className="bg-white/10 border border-white/15 rounded-2xl p-2.5 text-center space-y-1">
+                <TrendingUp className="w-4 h-4 mx-auto text-rose-200" />
+                <p className="text-lg font-extrabold text-white">{scansCount}</p>
+                <p className="text-[9px] font-bold uppercase tracking-wider text-rose-200">SCANS</p>
+              </div>
+
+              <div className="bg-white/10 border border-white/15 rounded-2xl p-2.5 text-center space-y-1">
+                <Users className="w-4 h-4 mx-auto text-rose-200" />
+                <p className="text-lg font-extrabold text-white">{usersCount}</p>
+                <p className="text-[9px] font-bold uppercase tracking-wider text-rose-200">USERS</p>
+              </div>
+
+              <div className="bg-white/10 border border-white/15 rounded-2xl p-2.5 text-center space-y-1">
+                <Gift className="w-4 h-4 mx-auto text-rose-200" />
+                <p className="text-lg font-extrabold text-white">{rewardsCount}</p>
+                <p className="text-[9px] font-bold uppercase tracking-wider text-rose-200">REWARDS</p>
+              </div>
+
+              <div className="bg-white/10 border border-white/15 rounded-2xl p-2.5 text-center space-y-1">
+                <Award className="w-4 h-4 mx-auto text-rose-200" />
+                <p className="text-lg font-extrabold text-white">{repeatPercent}%</p>
+                <p className="text-[9px] font-bold uppercase tracking-wider text-rose-200">REPEAT</p>
               </div>
             </div>
-
-            <button
-              onClick={() => navigate('/app/settings')}
-              className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white transition-colors"
-            >
-              <User className="w-5 h-5" />
-            </button>
-          </div>
-
-          {/* TOP 4 METRICS STRIP (EXACT SCREENSHOT REPLICA) */}
-          <div className="grid grid-cols-4 gap-2 sm:gap-4">
-            <div className="bg-white/10 border border-white/15 rounded-2xl p-2.5 text-center space-y-1">
-              <TrendingUp className="w-4 h-4 mx-auto text-rose-200" />
-              <p className="text-lg font-extrabold text-white">{scansCount}</p>
-              <p className="text-[9px] font-bold uppercase tracking-wider text-rose-200">SCANS</p>
-            </div>
-
-            <div className="bg-white/10 border border-white/15 rounded-2xl p-2.5 text-center space-y-1">
-              <Users className="w-4 h-4 mx-auto text-rose-200" />
-              <p className="text-lg font-extrabold text-white">{usersCount}</p>
-              <p className="text-[9px] font-bold uppercase tracking-wider text-rose-200">USERS</p>
-            </div>
-
-            <div className="bg-white/10 border border-white/15 rounded-2xl p-2.5 text-center space-y-1">
-              <Gift className="w-4 h-4 mx-auto text-rose-200" />
-              <p className="text-lg font-extrabold text-white">{rewardsCount}</p>
-              <p className="text-[9px] font-bold uppercase tracking-wider text-rose-200">REWARDS</p>
-            </div>
-
-            <div className="bg-white/10 border border-white/15 rounded-2xl p-2.5 text-center space-y-1">
-              <Award className="w-4 h-4 mx-auto text-rose-200" />
-              <p className="text-lg font-extrabold text-white">{repeatPercent}%</p>
-              <p className="text-[9px] font-bold uppercase tracking-wider text-rose-200">REPEAT</p>
-            </div>
-          </div>
-        </header>
+          </header>
+        )}
 
         {/* BODY CONTENT AREA */}
         <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">

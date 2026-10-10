@@ -63,23 +63,23 @@ export const LoyaltyProgramPage: React.FC = () => {
   return (
     <div className="space-y-8 font-sans">
       {/* PAGE HEADER */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200 pb-5">
         <div>
-          <h1 className="text-2xl font-extrabold text-slate-100 flex items-center gap-2">
+          <h1 className="text-2xl font-extrabold font-serif text-slate-900 flex items-center gap-2">
             Loyalty Engine & Milestones
-            <Badge variant="teal">Configurable Rules</Badge>
+            <Badge variant="druto">Configurable Rules</Badge>
           </h1>
-          <p className="text-xs text-slate-400 mt-1">Set visit milestone tiers, reward vouchers, and cooldown parameters</p>
+          <p className="text-xs text-slate-500 mt-1">Set visit milestone tiers, reward vouchers, and cooldown parameters</p>
         </div>
-        <Button variant="teal" size="sm" onClick={() => setIsAddModalOpen(true)} leftIcon={<Plus className="w-4 h-4" />}>
+        <Button variant="druto" size="sm" onClick={() => setIsAddModalOpen(true)} leftIcon={<Plus className="w-4 h-4" />}>
           Add Milestone Tier
         </Button>
       </div>
 
       {/* LOYALTY RULES SETTINGS */}
-      <Card className="p-6 bg-slate-900 border-slate-800 space-y-4">
-        <h3 className="text-sm font-bold text-slate-200 flex items-center gap-2">
-          <Settings className="w-4 h-4 text-teal-400" /> Visit Cooldown & Minimum Spend Controls
+      <Card className="p-6 bg-white border-slate-200/80 space-y-4 shadow-sm">
+        <h3 className="text-sm font-bold font-serif text-slate-900 flex items-center gap-2">
+          <Settings className="w-4 h-4 text-[#800A12]" /> Visit Cooldown & Minimum Spend Controls
         </h3>
         <form onSubmit={handleSaveSettings} className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
           <Input
@@ -96,7 +96,7 @@ export const LoyaltyProgramPage: React.FC = () => {
             onChange={e => setMinSpend(e.target.value)}
             helperText="Minimum order spend to count as a visit"
           />
-          <Button variant="outline" size="md" type="submit">
+          <Button variant="druto" size="md" type="submit">
             Save Engine Rules
           </Button>
         </form>
@@ -104,27 +104,27 @@ export const LoyaltyProgramPage: React.FC = () => {
 
       {/* MILESTONES TIER GRID */}
       <div className="space-y-4">
-        <h3 className="text-base font-bold text-slate-200">Active Milestone Tiers</h3>
+        <h3 className="text-base font-bold font-serif text-slate-900">Active Milestone Tiers</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {milestones.sort((a,b) => a.visit_number - b.visit_number).map(m => (
-            <Card key={m.id} className="p-5 bg-slate-900 border-slate-800 flex flex-col justify-between space-y-4 relative overflow-hidden">
+            <Card key={m.id} className="p-5 bg-white border-slate-200/80 flex flex-col justify-between space-y-4 relative overflow-hidden shadow-sm hover:border-slate-300 transition-all">
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <Badge variant="teal" size="sm">
+                  <Badge variant="druto" size="sm">
                     Visit #{m.visit_number}
                   </Badge>
                   <button
                     onClick={() => deleteMilestone(m.id)}
-                    className="text-slate-500 hover:text-rose-400 transition-colors"
+                    className="text-slate-400 hover:text-rose-600 transition-colors"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
-                <h4 className="font-bold text-slate-100 text-base">{m.title}</h4>
-                <p className="text-xs text-slate-400">{m.reward_description}</p>
+                <h4 className="font-bold text-slate-900 text-base">{m.title}</h4>
+                <p className="text-xs text-slate-600">{m.reward_description}</p>
               </div>
 
-              <div className="pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+              <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
                 <span className="capitalize font-medium">{m.reward_type.replace('_', ' ')}</span>
                 <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> Expiry: {m.expiry_days}d</span>
               </div>
@@ -156,11 +156,11 @@ export const LoyaltyProgramPage: React.FC = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">Reward Type</label>
+              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">Reward Type</label>
               <select
                 value={rewardType}
                 onChange={e => setRewardType(e.target.value as RewardType)}
-                className="w-full rounded-lg bg-slate-950 border border-slate-700 text-slate-100 text-sm p-2.5"
+                className="w-full rounded-xl bg-white border border-slate-300 text-slate-900 text-sm p-2.5 focus:ring-[#800A12] focus:border-[#800A12]"
               >
                 <option value="percent_discount">Percentage Discount (%)</option>
                 <option value="fixed_discount">Fixed Value Discount ({currencySymbol})</option>
@@ -191,9 +191,9 @@ export const LoyaltyProgramPage: React.FC = () => {
             onChange={e => setExpiryDays(e.target.value)}
           />
 
-          <div className="pt-4 flex justify-end gap-3 border-t border-slate-800">
+          <div className="pt-4 flex justify-end gap-3 border-t border-slate-200">
             <Button variant="outline" size="sm" type="button" onClick={() => setIsAddModalOpen(false)}>Cancel</Button>
-            <Button variant="teal" size="sm" type="submit">Create Milestone Tier</Button>
+            <Button variant="druto" size="sm" type="submit">Create Milestone Tier</Button>
           </div>
         </form>
       </Modal>

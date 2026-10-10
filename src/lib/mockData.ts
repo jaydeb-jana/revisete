@@ -50,66 +50,6 @@ export const INITIAL_BUSINESSES: Business[] = [
         is_main: false,
       }
     ]
-  },
-  {
-    id: 'biz-2',
-    owner_id: 'usr-owner-1',
-    name: 'Luxe & Glow Salon',
-    slug: 'luxe-glow-salon',
-    category: 'salon',
-    logo_url: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=200&h=200&q=80',
-    description: 'Premium hair styling, skincare & spa services.',
-    phone: '+91 98123 45678',
-    email: 'contact@luxeglow.com',
-    address: '18 HSR Layout Main Road',
-    city: 'Bengaluru',
-    currency: 'INR',
-    status: 'active',
-    plan: 'growth',
-    created_at: '2026-02-01T10:00:00Z',
-    branches: [
-      {
-        id: 'br-3',
-        business_id: 'biz-2',
-        name: 'HSR Studio',
-        address: '18 HSR Layout Main Road',
-        city: 'Bengaluru',
-        latitude: 12.9121,
-        longitude: 77.6446,
-        phone: '+91 98123 45678',
-        is_main: true,
-      }
-    ]
-  },
-  {
-    id: 'biz-3',
-    owner_id: 'usr-owner-1',
-    name: 'Urban Threads Fashion',
-    slug: 'urban-threads',
-    category: 'fashion',
-    logo_url: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=200&h=200&q=80',
-    description: 'Trendy streetwear, ethnic fusion & minimalist wear.',
-    phone: '+91 97788 99000',
-    email: 'support@urbanthreads.com',
-    address: 'Shop 104, Forum Mall',
-    city: 'Bengaluru',
-    currency: 'INR',
-    status: 'active',
-    plan: 'basic',
-    created_at: '2026-02-10T12:00:00Z',
-    branches: [
-      {
-        id: 'br-4',
-        business_id: 'biz-3',
-        name: 'Forum Mall Store',
-        address: 'Shop 104, Forum Mall',
-        city: 'Bengaluru',
-        latitude: 12.9348,
-        longitude: 77.6111,
-        phone: '+91 97788 99000',
-        is_main: true,
-      }
-    ]
   }
 ];
 

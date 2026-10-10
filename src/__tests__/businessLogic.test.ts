@@ -2,12 +2,10 @@ import { describe, it, expect } from 'vitest';
 import { INITIAL_BUSINESSES, INITIAL_CUSTOMERS, INITIAL_MILESTONES } from '../lib/mockData';
 
 describe('Druto Customer Retention Engine', () => {
-  it('should possess seed business categories for Cafes, Salons, and Fashion', () => {
-    expect(INITIAL_BUSINESSES.length).toBeGreaterThanOrEqual(3);
+  it('should possess active seed business with category', () => {
+    expect(INITIAL_BUSINESSES.length).toBeGreaterThanOrEqual(1);
     const categories = INITIAL_BUSINESSES.map(b => b.category);
     expect(categories).toContain('cafe');
-    expect(categories).toContain('salon');
-    expect(categories).toContain('fashion');
   });
 
   it('should initialize CRM customers with unique membership numbers', () => {

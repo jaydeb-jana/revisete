@@ -67,15 +67,15 @@ export const BranchesPage: React.FC = () => {
   return (
     <div className="space-y-8 font-sans">
       {/* PAGE HEADER */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200 pb-5">
         <div>
-          <h1 className="text-2xl font-extrabold text-slate-100 flex items-center gap-2">
+          <h1 className="text-2xl font-extrabold font-serif text-slate-900 flex items-center gap-2">
             Multi-Branch GPS Auto-Detection
-            <Badge variant="teal">{branches.length} Outlet Locations</Badge>
+            <Badge variant="druto">{branches.length} Outlet Locations</Badge>
           </h1>
-          <p className="text-xs text-slate-400 mt-1">Single universal QR code automatically detects branch using GPS location</p>
+          <p className="text-xs text-slate-500 mt-1">Single universal QR code automatically detects branch using GPS location</p>
         </div>
-        <Button variant="teal" size="sm" onClick={() => setIsAddModalOpen(true)} leftIcon={<Plus className="w-4 h-4" />}>
+        <Button variant="druto" size="sm" onClick={() => setIsAddModalOpen(true)} leftIcon={<Plus className="w-4 h-4" />}>
           Add New Branch Outlet
         </Button>
       </div>
@@ -85,27 +85,27 @@ export const BranchesPage: React.FC = () => {
 
       {/* BRANCHES LIST */}
       <div className="space-y-4">
-        <h3 className="text-base font-bold text-slate-200">Registered Branch Locations</h3>
+        <h3 className="text-base font-bold font-serif text-slate-900">Registered Branch Locations</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {branches.map(b => (
-            <Card key={b.id} className="p-5 bg-slate-900 border-slate-800 space-y-3">
+            <Card key={b.id} className="p-5 bg-white border-slate-200/80 space-y-3 shadow-sm hover:border-slate-300 transition-all">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-teal-400" />
-                  <h4 className="font-bold text-slate-100 text-sm">{b.name}</h4>
+                  <MapPin className="w-4 h-4 text-[#800A12]" />
+                  <h4 className="font-bold text-slate-900 text-sm">{b.name}</h4>
                 </div>
                 {b.is_main ? (
-                  <Badge variant="teal" size="sm">Main Flagship</Badge>
+                  <Badge variant="druto" size="sm">Main Flagship</Badge>
                 ) : (
                   <Badge variant="neutral" size="sm">Outlet</Badge>
                 )}
               </div>
 
-              <p className="text-xs text-slate-400 leading-relaxed">{b.address}, {b.city}</p>
+              <p className="text-xs text-slate-600 leading-relaxed">{b.address}, {b.city}</p>
 
-              <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 font-mono">
+              <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
                 <span>GPS: {b.latitude.toFixed(4)}, {b.longitude.toFixed(4)}</span>
-                <span className="text-emerald-400 font-semibold flex items-center gap-1">
+                <span className="text-emerald-700 font-semibold flex items-center gap-1">
                   <Navigation className="w-3.5 h-3.5" /> Auto-Detect Active
                 </span>
               </div>
@@ -126,9 +126,9 @@ export const BranchesPage: React.FC = () => {
             <Input label="Longitude (GPS)" value={lng} onChange={e => setLng(e.target.value)} />
           </div>
 
-          <div className="pt-4 flex justify-end gap-3 border-t border-slate-800">
+          <div className="pt-4 flex justify-end gap-3 border-t border-slate-200">
             <Button variant="outline" size="sm" type="button" onClick={() => setIsAddModalOpen(false)}>Cancel</Button>
-            <Button variant="teal" size="sm" type="submit">Save Branch</Button>
+            <Button variant="druto" size="sm" type="submit">Save Branch</Button>
           </div>
         </form>
       </Modal>

@@ -167,7 +167,7 @@ export const DashboardPage: React.FC = () => {
             </div>
           </div>
           <Button variant="outline" size="sm" className="w-full mt-4" onClick={() => navigate('/app/customers')}>
-            View All CRM Profiles
+            View All Customer Profiles
           </Button>
         </Card>
       </div>

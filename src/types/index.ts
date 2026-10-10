@@ -82,6 +82,9 @@ export interface CatalogItem {
   image_url?: string;
   is_available: boolean;
   metadata?: {
+    item_type?: string;
+    images?: string[];
+    video?: string;
     diet_type?: 'veg' | 'non-veg' | 'vegan'; // Cafe/Restaurant
     duration_minutes?: number; // Salon/Spa
     assigned_staff?: string; // Salon
@@ -99,6 +102,7 @@ export interface Customer {
   business_id: string;
   membership_number: string;
   name: string;
+  nickname?: string;
   phone?: string;
   email?: string;
   notes?: string;

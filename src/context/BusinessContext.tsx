@@ -47,6 +47,7 @@ interface BusinessContextType {
   
   addCustomer: (customer: Omit<Customer, 'id' | 'business_id' | 'created_at' | 'total_visits' | 'current_stamps' | 'completed_cards' | 'referral_code' | 'membership_number'>) => Customer;
   updateCustomer: (id: string, data: Partial<Customer>) => void;
+  deleteCustomer: (id: string) => void;
   
   updateLoyaltyProgram: (program: Partial<LoyaltyProgram>) => void;
   addMilestone: (milestone: Omit<LoyaltyMilestone, 'id' | 'business_id' | 'program_id'>) => void;
@@ -150,6 +151,10 @@ export const BusinessProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const updateCustomer = (id: string, data: Partial<Customer>) => {
     setCustomers(prev => prev.map(c => c.id === id ? { ...c, ...data } : c));
+  };
+
+  const deleteCustomer = (id: string) => {
+    setCustomers(prev => prev.filter(c => c.id !== id));
   };
 
   const updateLoyaltyProgram = (prog: Partial<LoyaltyProgram>) => {
@@ -441,6 +446,7 @@ export const BusinessProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       deleteItem,
       addCustomer,
       updateCustomer,
+      deleteCustomer,
       updateLoyaltyProgram,
       addMilestone,
       deleteMilestone,

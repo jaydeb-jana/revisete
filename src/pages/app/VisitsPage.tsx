@@ -47,23 +47,23 @@ export const VisitsPage: React.FC = () => {
   return (
     <div className="space-y-6 font-sans">
       {/* PAGE HEADER */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200 pb-5">
         <div>
-          <h1 className="text-2xl font-extrabold text-slate-100 flex items-center gap-2">
+          <h1 className="text-2xl font-extrabold font-serif text-slate-900 flex items-center gap-2">
             Visits & QR Check-In Engine
-            <Badge variant="teal">{visits.length} Total Visits</Badge>
+            <Badge variant="druto">{visits.length} Total Visits</Badge>
           </h1>
-          <p className="text-xs text-slate-400 mt-1">Server validated check-in rules: {loyaltyProgram.cooldown_hours}h cooldown • Min {currencySymbol}{loyaltyProgram.min_purchase_amount}</p>
+          <p className="text-xs text-slate-500 mt-1">Server validated check-in rules: {loyaltyProgram.cooldown_hours}h cooldown • Min {currencySymbol}{loyaltyProgram.min_purchase_amount}</p>
         </div>
-        <Button variant="teal" size="sm" onClick={() => setIsRecordModalOpen(true)} leftIcon={<QrCode className="w-4 h-4" />}>
+        <Button variant="druto" size="sm" onClick={() => setIsRecordModalOpen(true)} leftIcon={<QrCode className="w-4 h-4" />}>
           Scan / Record Customer Visit
         </Button>
       </div>
 
       {/* RESULT TOAST ALERT */}
       {toastResult && (
-        <div className={`p-4 rounded-xl border flex items-center justify-between text-xs font-semibold ${
-          toastResult.success ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-300' : 'bg-rose-500/15 border-rose-500/30 text-rose-300'
+        <div className={`p-4 rounded-2xl border flex items-center justify-between text-xs font-semibold ${
+          toastResult.success ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-rose-50 border-rose-200 text-[#800A12]'
         }`}>
           <div className="flex items-center gap-2">
             {toastResult.success ? <CheckCircle2 className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
@@ -74,33 +74,33 @@ export const VisitsPage: React.FC = () => {
       )}
 
       {/* VISITS AUDIT LOG TABLE */}
-      <Card className="p-0 bg-slate-900 border-slate-800 overflow-hidden">
+      <Card className="p-0 bg-white border-slate-200/80 overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-slate-800/60 border-b border-slate-800 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+              <tr className="bg-slate-50 border-b border-slate-200 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
                 <th className="py-3.5 px-4">Customer Name</th>
                 <th className="py-3.5 px-4">Purchase Amount</th>
                 <th className="py-3.5 px-4">Scanned Date & Time</th>
                 <th className="py-3.5 px-4">Validation Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800 text-xs">
+            <tbody className="divide-y divide-slate-100 text-xs">
               {visits.map(v => (
-                <tr key={v.id} className="hover:bg-slate-800/40 transition-colors">
-                  <td className="py-3 px-4 font-semibold text-slate-200">
+                <tr key={v.id} className="hover:bg-slate-50/80 transition-colors">
+                  <td className="py-3.5 px-4 font-bold text-slate-900">
                     {v.customer_name || 'Customer'}
                   </td>
 
-                  <td className="py-3 px-4 text-teal-400 font-extrabold">
+                  <td className="py-3.5 px-4 text-[#800A12] font-extrabold text-sm">
                     {currencySymbol}{v.purchase_amount}
                   </td>
 
-                  <td className="py-3 px-4 text-slate-400">
+                  <td className="py-3.5 px-4 text-slate-500">
                     {new Date(v.scanned_at).toLocaleString()}
                   </td>
 
-                  <td className="py-3 px-4">
+                  <td className="py-3.5 px-4">
                     <Badge variant={v.status === 'approved' ? 'success' : 'danger'} size="sm">
                       <ShieldCheck className="w-3 h-3" /> {v.status.toUpperCase()}
                     </Badge>
@@ -116,12 +116,12 @@ export const VisitsPage: React.FC = () => {
       <Modal isOpen={isRecordModalOpen} onClose={() => setIsRecordModalOpen(false)} title="Record Customer Check-In Visit">
         <form onSubmit={handleRecordVisit} className="space-y-4">
           <div className="space-y-1.5">
-            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">Select Customer</label>
+            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">Select Customer</label>
             <select
               value={selectedCustId}
               onChange={e => setSelectedCustId(e.target.value)}
               required
-              className="w-full rounded-lg bg-slate-950 border border-slate-700 text-slate-100 text-sm p-2.5"
+              className="w-full rounded-xl bg-white border border-slate-300 text-slate-900 text-sm p-2.5 focus:ring-[#800A12] focus:border-[#800A12]"
             >
               <option value="">-- Choose Customer --</option>
               {customers.map(c => (
@@ -147,15 +147,15 @@ export const VisitsPage: React.FC = () => {
             onChange={e => setVisitNotes(e.target.value)}
           />
 
-          <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 text-xs text-slate-400 space-y-1">
-            <p className="font-bold text-slate-300 flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-teal-400" /> Server Validation Rules</p>
+          <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 space-y-1">
+            <p className="font-bold text-slate-800 flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-[#800A12]" /> Server Validation Rules</p>
             <p>1. Cooldown window: {loyaltyProgram.cooldown_hours} hours required between check-ins.</p>
             <p>2. Automatic reward issuance when loyalty milestone (e.g. 3rd visit) is hit.</p>
           </div>
 
-          <div className="pt-4 flex justify-end gap-3 border-t border-slate-800">
+          <div className="pt-4 flex justify-end gap-3 border-t border-slate-200">
             <Button variant="outline" size="sm" type="button" onClick={() => setIsRecordModalOpen(false)}>Cancel</Button>
-            <Button variant="teal" size="sm" type="submit">Verify & Record Visit</Button>
+            <Button variant="druto" size="sm" type="submit">Verify & Record Visit</Button>
           </div>
         </form>
       </Modal>
