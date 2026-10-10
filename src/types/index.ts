@@ -137,6 +137,7 @@ export interface LoyaltyMilestone {
   reward_value: number;
   reward_description: string;
   expiry_days: number;
+  min_spend_amount?: number;
   is_scratch_card?: boolean;
 }
 

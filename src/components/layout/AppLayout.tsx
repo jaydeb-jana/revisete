@@ -53,7 +53,7 @@ export const AppLayout: React.FC = () => {
     { to: '/app/customers', label: 'Customers', icon: Users },
     { to: '/app/visits', label: 'Visits & Stamp Engine', icon: QrCode },
     { to: '/app/branches', label: 'Multi-Branch GPS', icon: MapPin },
-    { to: '/app/loyalty', label: 'Loyalty Milestones', icon: Award },
+    { to: '/app/loyalty', label: 'Loyalty Stamps', icon: Award },
     { to: '/app/tasks', label: 'Tasks & Approvals', icon: CheckSquare },
     { to: '/app/rewards', label: 'Rewards & Redemption', icon: Gift },
     { to: '/app/referrals', label: 'Referral Program', icon: Share2 },

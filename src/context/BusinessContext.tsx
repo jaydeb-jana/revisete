@@ -51,6 +51,7 @@ interface BusinessContextType {
   
   updateLoyaltyProgram: (program: Partial<LoyaltyProgram>) => void;
   addMilestone: (milestone: Omit<LoyaltyMilestone, 'id' | 'business_id' | 'program_id'>) => void;
+  updateMilestone: (id: string, milestone: Partial<LoyaltyMilestone>) => void;
   deleteMilestone: (id: string) => void;
   
   recordVisit: (customerId: string, purchaseAmount: number, notes?: string, branchId?: string) => { success: boolean; message: string; newReward?: Reward };
@@ -169,6 +170,10 @@ export const BusinessProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       ...m,
     };
     setMilestones(prev => [...prev, newM]);
+  };
+
+  const updateMilestone = (id: string, updated: Partial<LoyaltyMilestone>) => {
+    setMilestones(prev => prev.map(m => m.id === id ? { ...m, ...updated } : m));
   };
 
   const deleteMilestone = (id: string) => {
@@ -449,6 +454,7 @@ export const BusinessProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       deleteCustomer,
       updateLoyaltyProgram,
       addMilestone,
+      updateMilestone,
       deleteMilestone,
       recordVisit,
       addTask,
